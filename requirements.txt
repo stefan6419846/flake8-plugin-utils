@@ -1,0 +1,13 @@
+black==25.11.0
+coverage==7.11.3
+flake8==7.3.0
+flake8-bugbear==25.10.21
+isort==7.0.0
+mypy==1.18.2
+pep8-naming==0.15.1
+pytest==9.0.0
+pytest-cov==7.0.0
+pytest-deadfixtures==3.0.0
+pytest-mock==3.15.1
+types-flake8==7.3.0.20250622
+types-pyflakes==3.4.0.20250701

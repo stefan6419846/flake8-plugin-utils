@@ -33,7 +33,10 @@ jobs:
           python -m flake8 .
       - name: Validate static typing with mypy
         run:
-          mypy flake8_plugin_utils tests
+          python -m mypy flake8_plugin_utils tests
+      - name: isort
+        run:
+          python -m isort --check-only --verbose flake8_plugin_utils tests
       - name: Test
         run:
           python -m pytest --cov -vv tests
