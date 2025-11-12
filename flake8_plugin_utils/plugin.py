@@ -15,9 +15,9 @@ from typing import (
 
 from flake8.options.manager import OptionManager
 
-FLAKE8_ERROR = Tuple[int, int, str, 'Plugin']
+FLAKE8_ERROR = Tuple[int, int, str, "Plugin"]
 
-TConfig = TypeVar('TConfig')
+TConfig = TypeVar("TConfig")
 
 
 class Error:
@@ -44,23 +44,18 @@ class Visitor(Generic[TConfig], ast.NodeVisitor):
     @property
     def config(self) -> TConfig:
         if self._config is None:
-            raise TypeError(
-                f'{self} was initialized without a config.  Did you forget '
-                f'to override parse_options_to_config in your plugin class?'
-            )
+            raise TypeError(f"{self} was initialized without a config.  Did you forget " f"to override parse_options_to_config in your plugin class?")
         return self._config
 
-    def error_from_node(
-        self, error: Type[Error], node: ast.AST, **kwargs: Any
-    ) -> None:
-        self.errors.append(error(node.lineno, node.col_offset, **kwargs))
+    def error_from_node(self, error: Type[Error], node: ast.AST, **kwargs: Any) -> None:
+        self.errors.append(error(node.lineno, node.col_offset, **kwargs))  # type: ignore[attr-defined]
 
 
 class Plugin(Generic[TConfig]):
     name: str
     version: str
     visitors: List[Type[Visitor[TConfig]]]
-    config: TConfig
+    config: Optional[TConfig]
 
     def __init__(self, tree: ast.AST) -> None:
         self._tree: ast.AST = tree
@@ -77,14 +72,12 @@ class Plugin(Generic[TConfig]):
         return (
             error.lineno,
             error.col_offset,
-            f'{error.code} {error.message}',
+            f"{error.code} {error.message}",
             self,
         )
 
     @classmethod
-    def _create_visitor(
-        cls, visitor_cls: Type[Visitor[TConfig]]
-    ) -> Visitor[TConfig]:
+    def _create_visitor(cls, visitor_cls: Type[Visitor[TConfig]]) -> Visitor[TConfig]:
         if cls.config is None:
             return visitor_cls()
 
@@ -100,7 +93,7 @@ class Plugin(Generic[TConfig]):
         cls.config = cls.parse_options_to_config(option_manager, options, args)
 
     @classmethod
-    def parse_options_to_config(  # pylint: disable=unused-argument
+    def parse_options_to_config(
         cls,
         option_manager: OptionManager,
         options: argparse.Namespace,

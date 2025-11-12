@@ -1,0 +1,40 @@
+[flake8]
+# Directories/files to exclude.
+exclude =
+    # No need to traverse our Git directory.
+    .git,
+    # There's no value in checking cache directories.
+    __pycache__,
+    # This contains builds that we don't want to check.
+    build,
+    dist,
+    # Exclude virtual environments.
+    venv*
+# Custom limit.
+max_line_length = 160
+max_complexity = 10
+show_source = True
+ignore =
+    # whitespace before ':' -- isn't valid PEP8, conflicts with black
+    E203
+ignore_names =
+    # AST node visitor methods.
+    visit_AnnAssign,
+    visit_Assign,
+    visit_AsyncFor,
+    visit_AsyncFunctionDef,
+    visit_BinOp,
+    visit_Call,
+    visit_ClassDef,
+    visit_Compare,
+    visit_Constant,
+    visit_ExceptHandler,
+    visit_For,
+    visit_FunctionDef,
+    visit_Import,
+    visit_ImportFrom,
+    visit_Lambda,
+    visit_NamedExpr,
+    visit_Str,
+    # Test methods.
+    setUp,

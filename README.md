@@ -1,13 +1,5 @@
 # flake8-plugin-utils
 
-[![pypi](https://badge.fury.io/py/flake8-plugin-utils.svg)](https://pypi.org/project/flake8-plugin-utils)
-[![Python: 3.6+](https://img.shields.io/badge/Python-3.6+-blue.svg)](https://pypi.org/project/flake8-plugin-utils)
-[![Downloads](https://img.shields.io/pypi/dm/flake8-plugin-utils.svg)](https://pypistats.org/packages/flake8-plugin-utils)
-[![Build Status](https://travis-ci.org/Afonasev/flake8-plugin-utils.svg?branch=master)](https://travis-ci.org/Afonasev/flake8-plugin-utils)
-[![Code coverage](https://codecov.io/gh/afonasev/flake8-plugin-utils/branch/master/graph/badge.svg)](https://codecov.io/gh/afonasev/flake8-plugin-utils)
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://en.wikipedia.org/wiki/MIT_License)
-[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
-
 The package provides base classes and utils for flake8 plugin writing.
 
 ## Installation
@@ -53,13 +45,10 @@ def test_code_without_error():
 
 To add configuration to a plugin, do the following:
 
-1. Implement classmethod `add_options` in your plugin class, as per the
-[flake8 docs](https://flake8.pycqa.org/en/latest/plugin-development/plugin-parameters.html#registering-options).
-1. Override classmethod `parse_options_to_config` in your plugin class
-to return any object holding the options you need.
-1. If you need a custom `__init__` for your visitor, make sure it accepts
-a keyword argument named `config` and pass it to `super().__init__`
-1. Use `self.config` in visitor code.
+1. Implement classmethod `add_options` in your plugin class, as per the [flake8 docs](https://flake8.pycqa.org/en/latest/plugin-development/plugin-parameters.html#registering-options).
+2. Override classmethod `parse_options_to_config` in your plugin class to return any object holding the options you need.
+3. If you need a custom `__init__` for your visitor, make sure it accepts a keyword argument named `config` and pass it to `super().__init__`
+4. Use `self.config` in visitor code.
 
 Example:
 
@@ -154,93 +143,3 @@ The nodes are considered equivalent in the following cases:
   with duplicates taken into account
   * anything else -- if they represent the same AST, regardless of formatting
   (with any dicts in sets inside checked according to the rules above)
-
-## For developers
-
-### Show help
-
-    make help
-
-### Create venv and install deps
-
-    make init
-
-### Install git precommit hook
-
-    make precommit
-
-### Run linters, autoformat, tests etc.
-
-    make pretty lint test
-
-### Bump new version
-
-    make bump_major
-    make bump_minor
-    make bump_patch
-
-## Change Log
-
-Unreleased
------
-
-* ...
-
-1.3.3 - 2022-01-14
------
-
-* add py.typed file (#78)
-
-1.3.2 - 2021-05-05
------
-
-* Drop noqa detection (#56)
-* docs: Add help for Makefile
-
-1.3.1 - 2020-08-06
------
-
-* Fix handling of encoding when loading files (#37)
-
-1.3.0 - 2020-03-26
------
-
-* add `check_equivalent_nodes` utility function
-
-1.2.0 - 2020-03-06
------
-
-* add `config` argument to `assert_error` and `assert_not_error`
-
-1.1.1 - 2020-03-02
------
-
-* ignore encoding errors when reading strings for noqa validation
-
-1.1.0 - 2020-03-01
------
-
-* add ability for plugins to parse and use configuration
-**NB: this change breaks type-checking if you use typing/mypy. Change your
-code to inherit from `Plugin[None]` and `Visitor[None]` to fix.**
-
-1.0.0 - 2019-05-23
------
-
-* add message formatting to Error
-
-0.2.1 - 2019-04-01
------
-
-* don`t strip before src dedent in _error_from_src
-* add is_none, is_true, is_false util functions
-
-0.2.0 - 2019.02.21
------
-
-* add assert methods
-
-0.1.0 - 2019.02.09
------
-
-* initial

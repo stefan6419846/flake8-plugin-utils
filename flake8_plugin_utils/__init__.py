@@ -9,13 +9,13 @@ from .utils import (
 )
 
 __all__ = (
-    'Error',
-    'Plugin',
-    'Visitor',
-    'assert_error',
-    'assert_not_error',
-    'check_equivalent_nodes',
-    'is_false',
-    'is_none',
-    'is_true',
+    "Error",
+    "Plugin",
+    "Visitor",
+    "assert_error",
+    "assert_not_error",
+    "check_equivalent_nodes",
+    "is_false",
+    "is_none",
+    "is_true",
 )

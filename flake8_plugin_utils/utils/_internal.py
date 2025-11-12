@@ -1,11 +1,9 @@
 from typing import Callable, Iterator, Sequence, TypeVar
 
-_T = TypeVar('_T')
+_T = TypeVar("_T")
 
 
-def partition_by_indexes(
-    lst: Sequence[_T], indexes: Sequence[int]
-) -> Iterator[Sequence[_T]]:
+def partition_by_indexes(lst: Sequence[_T], indexes: Sequence[int]) -> Iterator[Sequence[_T]]:
     """
     Partitions a sequence around the given indexes.
 
@@ -22,9 +20,7 @@ def partition_by_indexes(
     yield lst[last_index + 1 :]
 
 
-def match_elements(
-    lst1: Sequence[_T], lst2: Sequence[_T], condition: Callable[[_T, _T], bool]
-) -> bool:
+def match_elements(lst1: Sequence[_T], lst2: Sequence[_T], condition: Callable[[_T, _T], bool]) -> bool:
     """
     Tries to match elements of lst1 and lst2 according to given condition.
 

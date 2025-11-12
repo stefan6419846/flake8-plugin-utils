@@ -2,7 +2,7 @@ import ast
 
 
 def _is(node: ast.AST, value: object) -> bool:
-    return isinstance(node, ast.NameConstant) and node.value is value
+    return isinstance(node, ast.Constant) and node.value is value
 
 
 def is_none(node: ast.AST) -> bool:

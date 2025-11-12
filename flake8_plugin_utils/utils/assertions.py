@@ -2,7 +2,7 @@ import ast
 from textwrap import dedent
 from typing import Any, Optional, Type
 
-from ..plugin import Error, TConfig, Visitor
+from flake8_plugin_utils.plugin import Error, TConfig, Visitor
 
 
 def _error_from_src(
@@ -31,9 +31,7 @@ def assert_error(
     assert isinstance(err, expected)
 
     expected_message = expected.formatted_message(**kwargs)
-    assert (
-        expected_message == err.message
-    ), f'Expected error with message "{expected_message}", got "{err.message}"'
+    assert expected_message == err.message, f'Expected error with message "{expected_message}", got "{err.message}"'
 
 
 def assert_not_error(

@@ -2,13 +2,14 @@ import ast
 from collections import deque
 from typing import Any, Deque, List, Optional, Tuple
 
-from ._internal import match_elements, partition_by_indexes
+from flake8_plugin_utils.utils._internal import match_elements, partition_by_indexes
 
 _DictKVPair = Tuple[Optional[ast.AST], ast.AST]
 
 
 def _check_equivalent_key_value_pair(
-    pair1: _DictKVPair, pair2: _DictKVPair,
+    pair1: _DictKVPair,
+    pair2: _DictKVPair,
 ) -> bool:
     """
     Callback for _match_list_elements for dict key-value pairs.
@@ -20,9 +21,7 @@ def _check_equivalent_key_value_pair(
     if key1 is None or key2 is None:
         return False  # pragma: no cover
 
-    return check_equivalent_nodes(key1, key2) and check_equivalent_nodes(
-        value1, value2
-    )
+    return check_equivalent_nodes(key1, key2) and check_equivalent_nodes(value1, value2)
 
 
 def _check_duplicate_dict_item(pair1: _DictKVPair, pair2: _DictKVPair) -> bool:
@@ -48,9 +47,7 @@ def _key_value_pairs_without_duplicates(node: ast.Dict) -> List[_DictKVPair]:
     all_pairs = list(zip(node.keys, node.values))
     result: List[_DictKVPair] = []
     for candidate in reversed(all_pairs):
-        if any(
-            _check_duplicate_dict_item(candidate, added) for added in result
-        ):
+        if any(_check_duplicate_dict_item(candidate, added) for added in result):
             continue
         result.append(candidate)
     result.reverse()
@@ -72,12 +69,8 @@ def _check_equivalent_dicts(node1: ast.Dict, node2: ast.Dict) -> bool:
 
     # 3: check expansions, e.g. {**other}
     # must be same expressions on the same positions
-    expansion_positions = [
-        i for i, (key, _) in enumerate(pairs1) if key is None
-    ]
-    if expansion_positions != [
-        i for i, (key, _) in enumerate(pairs2) if key is None
-    ]:
+    expansion_positions = [i for i, (key, _) in enumerate(pairs1) if key is None]
+    if expansion_positions != [i for i, (key, _) in enumerate(pairs2) if key is None]:
         return False
 
     for index in expansion_positions:
@@ -90,9 +83,7 @@ def _check_equivalent_dicts(node1: ast.Dict, node2: ast.Dict) -> bool:
         partition_by_indexes(pairs1, expansion_positions),
         partition_by_indexes(pairs2, expansion_positions),
     ):
-        if not match_elements(
-            chunk1, chunk2, condition=_check_equivalent_key_value_pair
-        ):
+        if not match_elements(chunk1, chunk2, condition=_check_equivalent_key_value_pair):
             return False
     return True
 
@@ -126,14 +117,10 @@ def _check_equivalent_sets(node1: ast.Set, node2: ast.Set) -> bool:
         return False
 
     # 3: check elements regardless of order
-    return match_elements(
-        elements1, elements2, condition=check_equivalent_nodes
-    )
+    return match_elements(elements1, elements2, condition=check_equivalent_nodes)
 
 
-def check_equivalent_nodes(  # noqa:C901 pylint:disable=too-many-return-statements,too-many-branches
-    node1: ast.AST, node2: ast.AST
-) -> bool:
+def check_equivalent_nodes(node1: ast.AST, node2: ast.AST) -> bool:  # noqa:C901
     """
     Checks that two given AST nodes represent the same AST.
 
@@ -146,9 +133,7 @@ def check_equivalent_nodes(  # noqa:C901 pylint:disable=too-many-return-statemen
     while queue1:
         value1 = queue1.popleft()
         value2 = queue2.popleft()
-        if type(value1) != type(  # pylint: disable=unidiomatic-typecheck
-            value2
-        ):
+        if type(value1) is not type(value2):
             return False
 
         if isinstance(value1, ast.Dict):
