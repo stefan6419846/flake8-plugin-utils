@@ -9,5 +9,5 @@ pytest==9.0.0
 pytest-cov==7.0.0
 pytest-deadfixtures==3.0.0
 pytest-mock==3.15.1
-types-flake8==7.3.0.20250622
+types-flake8==7.3.0.20260408
 types-pyflakes==3.4.0.20250701
