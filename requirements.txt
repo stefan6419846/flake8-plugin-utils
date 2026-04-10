@@ -1,5 +1,5 @@
 black==25.11.0
-coverage==7.11.3
+coverage==7.13.5
 flake8==7.3.0
 flake8-bugbear==25.11.29
 isort==7.0.0
