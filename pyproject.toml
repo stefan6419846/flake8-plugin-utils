@@ -52,6 +52,7 @@ Issues = "https://github.com/stefan6419846/flake8-plugin-utils/issues"
 where = ["."]
 include = [
     "flake8_plugin_utils",
+    "flake8_plugin_utils.*",
 ]
 namespaces = false
 
